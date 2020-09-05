@@ -15,12 +15,10 @@ import { Message } from '@lumino/messaging';
 import { Widget } from '@lumino/widgets';
 
 interface SCResponse {
-  copyright: string;
-  date: string;
-  explanation: string;
-  media_type: 'video' | 'image';
+  preview: string;
+  artist: any;
+  name: string;
   title: string;
-  url: string;
 }
 
 class SCWidget extends Widget {
@@ -36,9 +34,9 @@ class SCWidget extends Widget {
     this.div = document.createElement('div');
     this.node.appendChild(this.div);
 
-    // Add an image element to the panel
-    this.img = document.createElement('img');
-    this.node.appendChild(this.img);
+    // // Add an image element to the panel
+    // this.img = document.createElement('img');
+    // this.node.appendChild(this.img);
 
     // Add a summary element to the panel
     this.summary = document.createElement('p');
@@ -65,8 +63,9 @@ class SCWidget extends Widget {
    * Handle update requests for the widget.
    */
   async onUpdateRequest(msg: Message): Promise<void> {
+    //3135556
     const response = await fetch(
-      `https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY&date=${this.randomDate()}`
+      `https://cors-anywhere.herokuapp.com/https://api.deezer.com/track/${this.randomID()}`
     );
 
     if (!response.ok) {
@@ -81,20 +80,23 @@ class SCWidget extends Widget {
 
     const data = (await response.json()) as SCResponse;
 
-    if (data.media_type === 'image') {
-      // Populate the image
-      this.img.src = data.url;
-      this.img.title = data.title;
-      this.summary.innerText = data.title;
+    this.summary.innerHTML = `<a href="${data.preview}">${data.title} by ${
+      data.artist.name
+    }</a>`;
+    // if (data.media_type === 'image') {
+    //   // Populate the image
+    //   this.img.src = data.url;
+    //   this.img.title = data.title;
+    //   this.summary.innerText = data.title;
 
-      this.div.innerHTML = `<iframe scrolling="no" frameborder="0" allowTransparency="true" src="https://www.deezer.com/plugins/player?format=classic&autoplay=false&playlist=true&width=700&height=350&color=007FEB&layout=dark&size=medium&type=tracks&id=${this.randomID()}&app_id=1"></iframe>`;
+    //   this.div.innerHTML = `<iframe scrolling="no" frameborder="0" allowTransparency="true" src="https://www.deezer.com/plugins/player?format=classic&autoplay=false&playlist=true&width=700&height=350&color=007FEB&layout=dark&size=medium&type=tracks&id=${this.randomID()}&app_id=1"></iframe>`;
 
-      if (data.copyright) {
-        this.summary.innerText += ` (Copyright ${data.copyright})`;
-      }
-    } else {
-      this.summary.innerText = 'Random APOD fetched was not an image.';
-    }
+    //   if (data.copyright) {
+    //     this.summary.innerText += ` (Copyright ${data.copyright})`;
+    //   }
+    // } else {
+    //   this.summary.innerText = 'Random APOD fetched was not an image.';
+    // }
   }
 
   /**
@@ -111,6 +113,8 @@ class SCWidget extends Widget {
 
   randomID(): string {
     const randomID = Math.round(Math.random() * 999999 + 100000);
+    console.log('finding random song');
+    console.log(randomID);
     return randomID.toString();
   }
 }
