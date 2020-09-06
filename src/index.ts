@@ -109,9 +109,9 @@ class SCWidget extends Widget {
 
     this.audio.controls = true;
     this.audio.id = 'audio';
+    this.audio.crossOrigin = 'anonymous';
     this.audio.src = data.preview;
     this.audio.load();
-    this.audio.crossOrigin = 'anonymous';
 
     this.canvas.id = 'canvas';
 
@@ -167,6 +167,7 @@ class SCWidget extends Widget {
         x += barWidth + 1;
       }
     }
+    this.audio.load();
 
     renderFrame();
 
