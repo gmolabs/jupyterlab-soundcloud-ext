@@ -31,18 +31,15 @@ class SCWidget extends Widget {
 
     this.addClass('my-SCWidget');
 
-    // // Add an image element to the panel
-    // this.img = document.createElement('img');
-    // this.node.appendChild(this.img);
-
     // Add a summary element to the panel
     this.summary = document.createElement('p');
     this.node.appendChild(this.summary);
 
+    // Add a visualization canvas to the panel
     this.canvas = document.createElement('canvas');
     this.node.appendChild(this.canvas);
 
-    // Add a summary element to the panel
+    // Add a audio player element to the panel
     this.audio = document.createElement('audio');
     this.node.appendChild(this.audio);
   }
@@ -171,40 +168,9 @@ class SCWidget extends Widget {
 
     renderFrame();
 
-    //var audio = document.getElementById('audio');
-
-    //this.audio.src = URL.createObjectURL(data.preview);
-    //this.audio.load();
-    //this.audio.play();
-
-    // if (data.media_type === 'image') {
-    //   // Populate the image
-    //   this.img.src = data.url;
-    //   this.img.title = data.title;
-    //   this.summary.innerText = data.title;
-
-    //   this.div.innerHTML = `<iframe scrolling="no" frameborder="0" allowTransparency="true" src="https://www.deezer.com/plugins/player?format=classic&autoplay=false&playlist=true&width=700&height=350&color=007FEB&layout=dark&size=medium&type=tracks&id=${this.randomID()}&app_id=1"></iframe>`;
-
-    //   if (data.copyright) {
-    //     this.summary.innerText += ` (Copyright ${data.copyright})`;
-    //   }
-    // } else {
-    //   this.summary.innerText = 'Random APOD fetched was not an image.';
-    // }
-  }
-
   /**
-   * Get a random date string in YYYY-MM-DD format.
+   * Get a random id in the range of deezer track ids
    */
-  randomDate(): string {
-    const start = new Date(2010, 1, 1);
-    const end = new Date();
-    const randomDate = new Date(
-      start.getTime() + Math.random() * (end.getTime() - start.getTime())
-    );
-    return randomDate.toISOString().slice(0, 10);
-  }
-
   randomID(): string {
     const randomID = Math.round(Math.random() * 999999 + 100000);
     console.log('finding random song');
