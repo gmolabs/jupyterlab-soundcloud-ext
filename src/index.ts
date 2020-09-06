@@ -225,14 +225,14 @@ function activate(
   // Add an application command
   const command: string = 'sc:open';
   app.commands.addCommand(command, {
-    label: 'Soundcloud Frequency Spectrum',
+    label: 'Random Song Frequency Spectrum',
     execute: () => {
       if (!widget) {
         // Create a new widget if one does not exist
         const content = new SCWidget();
         widget = new MainAreaWidget({ content });
         widget.id = 'sc-jupyterlab';
-        widget.title.label = 'SC Freq Spectrum';
+        widget.title.label = 'Random Song Frequency Spectrum';
         widget.title.closable = true;
       }
       if (!tracker.has(widget)) {
