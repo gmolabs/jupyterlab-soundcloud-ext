@@ -19,6 +19,7 @@ interface SCResponse {
   artist: any;
   name: string;
   title: string;
+  link: string;
 }
 
 class SCWidget extends Widget {
@@ -29,10 +30,6 @@ class SCWidget extends Widget {
     super();
 
     this.addClass('my-SCWidget');
-
-    // Add a div
-    this.div = document.createElement('div');
-    this.node.appendChild(this.div);
 
     // // Add an image element to the panel
     // this.img = document.createElement('img');
@@ -97,9 +94,15 @@ class SCWidget extends Widget {
 
     const data = (await response.json()) as SCResponse;
 
+    this.summary.id = 'summary';
     this.summary.innerHTML = `
     <div id="content">
-      <a href="${data.preview}">${data.title} by ${data.artist.name} </a>
+    <div id="info"><span class="title"><a href="${data.link}">${
+      data.title
+    }</a></span> by <span class="artist"><a href=${data.artist.link}>${
+      data.artist.name
+    }</a></span>
+    </div>
       <canvas id="canvas"></canvas>
     </div>
     `;
@@ -154,9 +157,9 @@ class SCWidget extends Widget {
       for (var i = 0; i < bufferLength; i++) {
         barHeight = dataArray[i];
 
-        var r = barHeight + 25 * (i / bufferLength);
+        var b = barHeight + 25 * (i / bufferLength);
         var g = 250 * (i / bufferLength);
-        var b = 50;
+        var r = 50;
 
         ctx.fillStyle = 'rgb(' + r + ',' + g + ',' + b + ')';
         ctx.fillRect(x, HEIGHT - barHeight, barWidth, barHeight);

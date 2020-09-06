@@ -3,20 +3,35 @@
   flex-direction: column;
   align-items: center;
   overflow: auto;
-  color: #fafafa;
+  color: #666666;
 }
 
 #canvas {
   position: relative;
-  left: 10px;
-  top: 10px;
   width: 100%;
   height: 100%;
 }
 
 audio {
   position: relative;
+  width: 100%;
+}
+
+#summary {
+  height: 0px;
+  z-index: 999;
+}
+
+.title {
+  font-size: 24px;
+  color: #cccccc;
+}
+
+.artist {
+  color: #cccccc;
+}
+
+#info {
+  position: absolute;
   left: 10px;
-  bottom: 10px;
-  width: calc(100% - 20px);
 }
