@@ -7,15 +7,15 @@
 }
 
 #canvas {
-  position: fixed;
-  left: 0;
-  top: 0;
+  position: relative;
+  left: 10px;
+  top: 10px;
   width: 100%;
   height: 100%;
 }
 
 audio {
-  position: fixed;
+  position: relative;
   left: 10px;
   bottom: 10px;
   width: calc(100% - 20px);

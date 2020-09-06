@@ -30,7 +30,7 @@ class SCWidget extends Widget {
 
     this.addClass('my-SCWidget');
 
-    // Add a deezer player widget to the panel
+    // Add a div
     this.div = document.createElement('div');
     this.node.appendChild(this.div);
 
@@ -41,6 +41,13 @@ class SCWidget extends Widget {
     // Add a summary element to the panel
     this.summary = document.createElement('p');
     this.node.appendChild(this.summary);
+
+    this.canvas = document.createElement('canvas');
+    this.node.appendChild(this.canvas);
+
+    // Add a summary element to the panel
+    this.audio = document.createElement('audio');
+    this.node.appendChild(this.audio);
   }
 
   /**
@@ -58,6 +65,16 @@ class SCWidget extends Widget {
    * The summary text element associated with the widget.
    */
   readonly summary: HTMLParagraphElement;
+
+  /**
+   * The audio player
+   */
+  readonly audio: HTMLAudioElement;
+
+  /**
+   * The audio player
+   */
+  readonly canvas: HTMLCanvasElement;
 
   /**
    * Handle update requests for the widget.
@@ -80,9 +97,82 @@ class SCWidget extends Widget {
 
     const data = (await response.json()) as SCResponse;
 
-    this.summary.innerHTML = `<a href="${data.preview}">${data.title} by ${
-      data.artist.name
-    }</a>`;
+    this.summary.innerHTML = `
+    <div id="content">
+      <a href="${data.preview}">${data.title} by ${data.artist.name} </a>
+      <canvas id="canvas"></canvas>
+    </div>
+    `;
+
+    this.audio.controls = true;
+    this.audio.id = 'audio';
+    this.audio.src = data.preview;
+    this.audio.load();
+    this.audio.crossOrigin = 'anonymous';
+
+    this.canvas.id = 'canvas';
+
+    //https://codepen.io/nfj525/pen/rVBaab
+    //create audio context for fft analysis
+
+    var context = new AudioContext();
+    var src = context.createMediaElementSource(this.audio);
+    var analyser = context.createAnalyser();
+
+    this.canvas.width = window.innerWidth;
+    this.canvas.height = window.innerHeight;
+
+    var ctx = this.canvas.getContext('2d');
+
+    src.connect(analyser);
+    analyser.connect(context.destination);
+
+    analyser.fftSize = 256;
+
+    var bufferLength = analyser.frequencyBinCount;
+    console.log(bufferLength);
+
+    var dataArray = new Uint8Array(bufferLength);
+
+    var WIDTH = this.canvas.width;
+    var HEIGHT = this.canvas.height;
+
+    var barWidth = (WIDTH / bufferLength) * 2.5;
+    var barHeight;
+    var x = 0;
+
+    function renderFrame() {
+      requestAnimationFrame(renderFrame);
+
+      x = 0;
+
+      analyser.getByteFrequencyData(dataArray);
+
+      ctx.fillStyle = '#000';
+      ctx.fillRect(0, 0, WIDTH, HEIGHT);
+
+      for (var i = 0; i < bufferLength; i++) {
+        barHeight = dataArray[i];
+
+        var r = barHeight + 25 * (i / bufferLength);
+        var g = 250 * (i / bufferLength);
+        var b = 50;
+
+        ctx.fillStyle = 'rgb(' + r + ',' + g + ',' + b + ')';
+        ctx.fillRect(x, HEIGHT - barHeight, barWidth, barHeight);
+
+        x += barWidth + 1;
+      }
+    }
+
+    renderFrame();
+
+    //var audio = document.getElementById('audio');
+
+    //this.audio.src = URL.createObjectURL(data.preview);
+    //this.audio.load();
+    //this.audio.play();
+
     // if (data.media_type === 'image') {
     //   // Populate the image
     //   this.img.src = data.url;
