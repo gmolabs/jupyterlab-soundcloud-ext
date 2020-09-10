@@ -115,33 +115,33 @@ class SCWidget extends Widget {
     //https://codepen.io/nfj525/pen/rVBaab
     //create audio context for fft analysis
 
-    var context = new AudioContext();
-    var src = context.createMediaElementSource(this.audio);
-    var analyser = context.createAnalyser();
+    const context = new AudioContext();
+    const src = context.createMediaElementSource(this.audio);
+    const analyser = context.createAnalyser();
 
     this.canvas.width = window.innerWidth;
     this.canvas.height = window.innerHeight;
 
-    var ctx = this.canvas.getContext('2d');
+    const ctx = this.canvas.getContext('2d');
 
     src.connect(analyser);
     analyser.connect(context.destination);
 
     analyser.fftSize = 256;
 
-    var bufferLength = analyser.frequencyBinCount;
+    const bufferLength = analyser.frequencyBinCount;
     console.log(bufferLength);
 
-    var dataArray = new Uint8Array(bufferLength);
+    const dataArray = new Uint8Array(bufferLength);
 
-    var WIDTH = this.canvas.width;
-    var HEIGHT = this.canvas.height;
+    const WIDTH = this.canvas.width;
+    const HEIGHT = this.canvas.height;
 
-    var barWidth = (WIDTH / bufferLength) * 2.5;
-    var barHeight;
-    var x = 0;
+    let barWidth = (WIDTH / bufferLength) * 2.5;
+    let barHeight;
+    let x = 0;
 
-    function renderFrame() {
+    function renderFrame(): void {
       requestAnimationFrame(renderFrame);
 
       x = 0;
@@ -184,7 +184,7 @@ function myActivate(
   app: JupyterFrontEnd,
   palette: ICommandPalette,
   restorer: ILayoutRestorer
-) {
+): void {
   console.log('JupyterLab extension jupyterlab_apod is activated!');
 
   // Declare a widget variable
