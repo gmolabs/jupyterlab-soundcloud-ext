@@ -4,16 +4,14 @@
 
 Visualize frequency info of soundcloud audio
 
-
-
 ## Requirements
 
-* JupyterLab >= 2.0
+- JupyterLab >= 2.0
 
 ## Install
 
 ```bash
-jupyter labextension install jupyterlab-soundcloud-ext
+jupyter labextension install @geoffm/jupyterlab-soundcloud-ext
 ```
 
 ## Contributing
