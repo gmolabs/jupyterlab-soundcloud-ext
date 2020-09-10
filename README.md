@@ -14,6 +14,8 @@ Visualize frequency info of soundcloud audio
 jupyter labextension install @geoffm/jupyterlab-soundcloud-ext
 ```
 
+find it in the extensions list under "Random Song Frequency Spectrum"
+
 ## Contributing
 
 ### Install
