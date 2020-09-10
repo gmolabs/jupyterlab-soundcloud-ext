@@ -137,7 +137,7 @@ class SCWidget extends Widget {
     const WIDTH = this.canvas.width;
     const HEIGHT = this.canvas.height;
 
-    let barWidth = (WIDTH / bufferLength) * 2.5;
+    const barWidth = (WIDTH / bufferLength) * 2.5;
     let barHeight;
     let x = 0;
 
@@ -151,12 +151,12 @@ class SCWidget extends Widget {
       ctx.fillStyle = '#000';
       ctx.fillRect(0, 0, WIDTH, HEIGHT);
 
-      for (var i = 0; i < bufferLength; i++) {
+      for (let i = 0; i < bufferLength; i++) {
         barHeight = dataArray[i];
 
-        var b = barHeight + 25 * (i / bufferLength);
-        var g = 250 * (i / bufferLength);
-        var r = 50;
+        const b = barHeight + 25 * (i / bufferLength);
+        const g = 250 * (i / bufferLength);
+        const r = 50;
 
         ctx.fillStyle = 'rgb(' + r + ',' + g + ',' + b + ')';
         ctx.fillRect(x, HEIGHT - barHeight, barWidth, barHeight);
@@ -191,7 +191,7 @@ function myActivate(
   let widget: MainAreaWidget<SCWidget>;
 
   // Add an application command
-  const command: string = 'sc:open';
+  const command = 'sc:open';
   app.commands.addCommand(command, {
     label: 'Random Song Frequency Spectrum',
     execute: () => {
@@ -222,7 +222,7 @@ function myActivate(
   palette.addItem({ command, category: 'Tutorial' });
 
   // Track and restore the widget state
-  let tracker = new WidgetTracker<MainAreaWidget<SCWidget>>({
+  const tracker = new WidgetTracker<MainAreaWidget<SCWidget>>({
     namespace: 'apod'
   });
   restorer.restore(tracker, {
