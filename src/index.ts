@@ -14,7 +14,7 @@ import { Message } from '@lumino/messaging';
 
 import { Widget } from '@lumino/widgets';
 
-interface SCResponse {
+interface ISCResponse {
   preview: string;
   artist: any;
   name: string;
@@ -89,7 +89,7 @@ class SCWidget extends Widget {
       return;
     }
 
-    const data = (await response.json()) as SCResponse;
+    const data = (await response.json()) as ISCResponse;
 
     this.summary.id = 'summary';
     this.summary.innerHTML = `
