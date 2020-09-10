@@ -1,6 +1,6 @@
 {
   "name": "@geoffm/jupyterlab-soundcloud-ext",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Visualize frequency info of deezer audio",
   "keywords": [
     "jupyter",
