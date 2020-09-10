@@ -76,7 +76,7 @@ class SCWidget extends Widget {
   async onUpdateRequest(msg: Message): Promise<void> {
     //3135556
     const response = await fetch(
-      `https://cors-anywhere.herokuapp.com/https://api.deezer.com/track/${this.randomID()}`
+      `https://cors-anywhere.herokuapp.com/https://api.deezer.com/track/${randomID()}`
     );
 
     if (!response.ok) {
@@ -168,18 +168,19 @@ class SCWidget extends Widget {
 
     renderFrame();
 
-  /**
-   * Get a random id in the range of deezer track ids
-   */
-  randomID(): string {
-    const randomID = Math.round(Math.random() * 999999 + 100000);
-    console.log('finding random song');
-    console.log(randomID);
-    return randomID.toString();
+    /**
+     * Get a random id in the range of deezer track ids
+     */
+    function randomID(): string {
+      const myRandomID = Math.round(Math.random() * 999999 + 100000);
+      console.log('finding random song');
+      console.log(myRandomID);
+      return myRandomID.toString();
+    }
   }
 }
 
-function activate(
+function myActivate(
   app: JupyterFrontEnd,
   palette: ICommandPalette,
   restorer: ILayoutRestorer
@@ -237,7 +238,7 @@ const extension: JupyterFrontEndPlugin<void> = {
   id: 'jupyterlab_soundcloud',
   autoStart: true,
   requires: [ICommandPalette, ILayoutRestorer],
-  activate: activate
+  activate: myActivate
 };
 
 export default extension;
